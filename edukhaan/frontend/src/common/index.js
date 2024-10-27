@@ -1,6 +1,6 @@
 import UserProfile from "../pages/userProflie"
 
-const backendDomin = "http://localhost:8080"
+const backendDomin = process.env.REACT_APP_BACKEND_URL //"http://localhost:8080"
 
 const SummaryApi = {
     signUP: {
