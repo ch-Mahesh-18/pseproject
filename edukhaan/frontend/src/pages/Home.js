@@ -15,6 +15,7 @@ const Home = () => {
 
       <VerticalCardProduct category={"mobiles"} heading={"New Arrivals in Mobiles"}/>
       <VerticalCardProduct category={"Mouse"} heading={"Mouse"}/>
+      <VerticalCardProduct category={"Laptops"} heading={"Laptops"}/>
       <VerticalCardProduct category={"televisions"} heading={" Must have Televisions"}/>
       <VerticalCardProduct category={"camera"} heading={"Best Camera & Photography"}/>
       <VerticalCardProduct category={"earphones"} heading={"Wired Earphones"}/>

@@ -1,4 +1,4 @@
-import React, { useState ,useContext} from 'react'
+import React, { useState ,useContext , useEffect} from 'react'
 import Logo from "./Logo";
 import { GoSearch } from "react-icons/go";
 import { FaUserCircle } from "react-icons/fa";
@@ -26,7 +26,7 @@ const Header = () => {
       method: SummaryApi.logout_user.method,
       credentials: "include",
     });
-
+ 
     const data = await fetchData.json();
 
     if (data.success) {
@@ -39,6 +39,9 @@ const Header = () => {
       toast.error(data.message);
     }
   };
+  useEffect(() => {
+    // This effect will trigger re-renders when user or cart count changes
+  }, [user, context?.cartProductCount]);
   const handleSearch = (e)=>{
     const { value } = e.target
     setSearch(value)
@@ -57,11 +60,11 @@ const Header = () => {
             <Logo w={120} h={50} />
           </Link>
         </div>
-        <div className="hidden lg:flex items-center w-full justify-between max-w-sm shadow-sm border-rounded-full focus-within:shadow-md pl-2">
+        <div className="hidden lg:flex items-center w-full justify-between bg-slate-200 max-w-sm shadow-sm border-rounded-full focus-within:shadow-md pl-2">
           <input
             type="text"
             placeholder="What are you looking for....?"
-            className="w-full outline-none "
+            className="w-full outline-none bg-slate-200 "
             onChange={handleSearch} value={search}/>
           
           <div className="text-lg min-w-[40px] flex items-center justify-center h-8  text-white bg-purple-700 rounded-r-full cursor-pointer ">
@@ -78,6 +81,7 @@ const Header = () => {
                             <img src={user?.profilePic} className='w-10 h-10 rounded-full' alt={user?.name} />
                           ) : (
                             <FaUserCircle/>
+                            
                           )
                         }
                       </div>
@@ -94,6 +98,7 @@ const Header = () => {
                           <Link to ={"/admin-panel/all-products"} className="whitespace-nowrap hidden md:block hover:bg-slate-100 p-2" onClick={()=> setMenuDisplay(preve => !preve)}> Admin Panel</Link>
                         )
                       }
+                      <Link to ={'/profile'} className="whitespace-nowrap hidden md:block hover:bg-slate-100 p-2" onClick={()=> setMenuDisplay(preve => !preve)}>Profile</Link>
                      
                     </nav>
                 </div>

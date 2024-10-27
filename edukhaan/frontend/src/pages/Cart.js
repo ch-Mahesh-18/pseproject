@@ -4,6 +4,7 @@ import Context from '../context';
 import displayINRCurrency from '../helper/displayINRCurrency';
 import { MdDelete } from "react-icons/md";
 import { toast } from "react-toastify";
+import { loadStripe } from '@stripe/stripe-js';
 
 
 const Cart = () => {
@@ -124,6 +125,29 @@ const Cart = () => {
         }
     };
 
+    const handlePayment = async()=>{
+
+        const stripePromise = await loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
+        const response = await fetch(SummaryApi.payment.url,{
+            method : SummaryApi.payment.method,
+            credentials : 'include',
+            headers : {
+                "content-type" : 'application/json'
+            },
+            body : JSON.stringify({
+                cartItems : data
+            })
+        })               
+
+        const responseData = await response.json()
+
+        if(responseData?.id){
+            stripePromise.redirectToCheckout({ sessionId : responseData.id})
+        }
+
+        console.log("payment response",responseData)
+    }
+ 
     const totalQty = data.reduce((previousValue, currentValue) => previousValue + currentValue.quantity, 0);
     const totalPrice = data.reduce((preve, curr) => preve + (curr.quantity * curr?.productId?.sellingPrice), 0);
     return (
@@ -182,60 +206,62 @@ const Cart = () => {
                     }
                 </div>
                 {/* Summary */}
-                <div className='mt-5 lg:mt-0 w-full max-w-sm'>
-                    {
-                        loading ? (
-                            <div className='h-36 bg-slate-200 border border-slate-300 animate-pulse'>
-                            </div>
-                        ) : (
-                            <div className='h-auto bg-white shadow-lg'>
-                                <h2 className='text-white bg-purple-600 px-4 py-1 flex justify-center text-xl font-medium'>Summary</h2>
-
-                                {/* Display product names and their quantities */}
-                                <div className='px-4 py-2'>
-                                    {data.map((product, index) => (
-                                        <div key={product?._id + "Summary Product"} className='flex justify-between my-2'>
-                                            {/* Truncate product names */}
-                                            <span className='text-lg text-slate-700 max-w-[200px] truncate'>
-                                                {product?.productId?.productName}
-                                            </span>
-                                            <span className='text-lg text-slate-700'>x {product?.quantity}</span>
-                                        </div>
-                                    ))}
+                {
+                    data[0] &&(
+                        <div className='mt-5 lg:mt-0 w-full max-w-sm'>
+                        {
+                            loading ? (
+                                <div className='h-36 bg-slate-200 border border-slate-300 animate-pulse'>
                                 </div>
+                            ) : (
+                                <div className='h-auto bg-white shadow-lg'>
+                                    <h2 className='text-white bg-purple-600 px-4 py-1 flex justify-center text-xl font-medium'>Summary</h2>
+    
+                                    {/* Display product names and their quantities */}
+                                    <div className='px-4 py-2'>
+                                        {data.map((product, index) => (
+                                            <div key={product?._id + "Summary Product"} className='flex justify-between my-2'>
+                                                {/* Truncate product names */}
+                                                <span className='text-lg text-slate-700 max-w-[200px] truncate'>
+                                                    {product?.productId?.productName}
+                                                </span>
+                                                <span className='text-lg text-slate-700'>x {product?.quantity}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+    
+                                    {/* Display total quantity */}
+                                    <div className='flex items-center justify-between px-4 py-2 gap-2 font-medium text-lg text-slate-600'>
+                                        <p>Total Quantity</p>
+                                        <p>{totalQty}</p>
+                                    </div>
+    
+                                    {/* Display total price */}
+                                    <div className='flex items-center justify-between px-4 py-2 gap-2 font-medium text-lg text-slate-600'>
+                                        <p>Product Total</p>
+                                        <p>{displayINRCurrency(totalPrice)}</p>
+                                    </div>
+    
+                                    {/* Add shipping charges */}
+                                    
+    
+                                    {/* Display grand total (product total + shipping charges) */}
+                                    <div className='flex items-center justify-between px-4 py-2 gap-2 font-bold text-lg text-slate-700 border-t border-slate-300 mt-2'>
+                                        <p>Grand Total</p>
+                                        <p>{displayINRCurrency(totalPrice)}</p>
+                                    </div>
+    
+                                    {/* Payment Button */}
+                                    <button className='bg-purple-600 py-1  px -4 text-2xl text-white w-full mt-2' onClick={handlePayment}>Payment</button>
 
-                                {/* Display total quantity */}
-                                <div className='flex items-center justify-between px-4 py-2 gap-2 font-medium text-lg text-slate-600'>
-                                    <p>Total Quantity</p>
-                                    <p>{totalQty}</p>
                                 </div>
+                            )
+                        }
+                    </div>
+                    )
+                }
 
-                                {/* Display total price */}
-                                <div className='flex items-center justify-between px-4 py-2 gap-2 font-medium text-lg text-slate-600'>
-                                    <p>Product Total</p>
-                                    <p>{displayINRCurrency(totalPrice)}</p>
-                                </div>
-
-                                {/* Add shipping charges */}
-                                <div className='flex items-center justify-between px-4 py-2 gap-2 font-medium text-lg text-slate-600'>
-                                    <p>Shipping Charges</p>
-                                    <p>{displayINRCurrency(200)}</p>
-                                </div>
-
-                                {/* Display grand total (product total + shipping charges) */}
-                                <div className='flex items-center justify-between px-4 py-2 gap-2 font-bold text-lg text-slate-700 border-t border-slate-300 mt-2'>
-                                    <p>Grand Total</p>
-                                    <p>{displayINRCurrency(totalPrice + 200)}</p>
-                                </div>
-
-                                {/* Payment Button */}
-                                <button className='bg-purple-600 p-2 text-white w-full mt-2 transition-all duration-300 hover:bg-purple-700 text-xl font-medium'>
-                                    CheckOut
-                                </button>
-                            </div>
-                        )
-                    }
-                </div>
+                
 
 
             </div>

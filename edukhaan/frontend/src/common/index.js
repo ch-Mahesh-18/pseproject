@@ -1,3 +1,5 @@
+import UserProfile from "../pages/userProflie"
+
 const backendDomin = "http://localhost:8080"
 
 const SummaryApi = {
@@ -13,6 +15,10 @@ const SummaryApi = {
     current_user: {
         url: `${backendDomin}/api/user-details`,
         method: "get"
+    },
+    userProfile:{
+        url : `${backendDomin}/api/profile`,
+        method : "get"
     },
     logout_user: {
         url: `${backendDomin}/api/userLogout`,
@@ -79,13 +85,25 @@ const SummaryApi = {
         method: 'post'
     },
     forgotPassword: {
-        url: '/api/forgot-password', // Add your backend route for forgot password
+        url: `${backendDomin}/api/forgot-password`, // Add your backend route for forgot password
         method: 'POST'
-      },
-      resetPassword: {
-        url: '/api/reset-password', // Add your backend route for reset password
+    },
+    resetPassword: {
+        url: `${backendDomin}/api/reset-password`,
         method: 'POST'
-      },
+    },
+    payment: {
+        url: `${backendDomin}/api/checkout`,
+        method: 'post'
+    },
+    getOrder: {
+        url: `${backendDomin}/api/order-list`,
+        method: 'get'
+    },
+    allOrder: {
+        url: `${backendDomin}/api/all-order`,
+        method: 'get'
+    }
 
 }
 

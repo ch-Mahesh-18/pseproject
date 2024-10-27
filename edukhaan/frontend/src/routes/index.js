@@ -7,11 +7,15 @@ import SignUp from '../pages/SignUp'
 import AdminPanel from '../pages/AdminPanel'
 import AllUsers from '../pages/AllUsers'
 import AllProducts from '../pages/AllProducts'
+import AllOrder from '../pages/AllOrders'
 import CategoryProduct from '../pages/CategoryProduct'
 import ProductDetails from '../pages/ProductDetails'
 import Cart from '../pages/Cart'
 import SearchProduct from '../pages/SearchProduct'
-
+import Success from '../pages/Success'
+import OrderPage from '../pages/OrderPage'
+import Cancel from '../pages/Cancel'
+import UserProfile from '../pages/userProflie'
 const router = createBrowserRouter([
     {
         path : "/",
@@ -50,6 +54,22 @@ const router = createBrowserRouter([
                 element : <SearchProduct/>
             },
             {
+                path : 'success',
+                element : <Success/>
+            },
+            {
+                path : "cancel",
+                element : <Cancel/>
+            },
+            {
+                path : 'order',
+                element : <OrderPage/>
+            },
+            {
+                path : "profile",
+                element : <UserProfile/>
+            },
+            {
                 path : "admin-panel",
                 element : <AdminPanel/>,
                 children : [
@@ -60,6 +80,10 @@ const router = createBrowserRouter([
                     {
                         path : "all-products",
                         element : <AllProducts/>
+                    },
+                    {
+                        path : "all-order",
+                        element : <AllOrder/>
                     }
                 ]
             },

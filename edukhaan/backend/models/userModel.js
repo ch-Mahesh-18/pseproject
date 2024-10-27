@@ -9,13 +9,12 @@ const userSchema = new mongoose.Schema({
     },
     password: String,
     phoneNumber: String, // Add this field for phone numbers
-    resetPasswordToken: String, // For storing the reset token
-    resetPasswordExpires: Date, // For storing the token expiration
+    resetPasswordOtp: String, // For storing the hashed OTP
+    resetPasswordExpires: Date, // For storing the OTP expiration
     role: String
 }, {
     timestamps: true
 });
-
 
 const userModel = mongoose.model("user", userSchema);
 

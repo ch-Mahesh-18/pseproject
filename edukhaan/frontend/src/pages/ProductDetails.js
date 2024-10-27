@@ -187,8 +187,8 @@ const ProductDetails = () => {
                     <button className='border-2 border-purple-600 rounded px-3 py-1 min-w-[120px] font-medium text-white bg-purple-600 hover:text-purple-600 hover:bg-white' onClick={(e) => handleAddToCart(e, data?._id)}>Add To Cart</button>
                   </div>
                 <div>
-                  <p className='text-slate-600  font-extrabold font-serif my-1'>Description : </p>
-                  <p className='font-serif text-lg'>{data?.description}</p>
+                  <p className='text-slate-600  font-extrabold font-sans my-1'>Description : </p>
+                  <p className='font-sans text-lg'>{data?.description}</p>
                 </div>
               </div>
             )

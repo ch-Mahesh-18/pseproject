@@ -28,7 +28,7 @@ const VerticalCard = ({loading,data = []}) => {
                              <h2 className='font-medium text-base md:text-lg text-ellipsis line-clamp-1 text-black p-1 py-2 animate-pulse rounded-full bg-slate-200'></h2>
                              <p className='capitalize text-slate-500 p-1 animate-pulse rounded-full bg-slate-200  py-2'></p>
                              <div className='flex gap-3'>
-                                 <p className='text-cyan-600 font-medium p-1 animate-pulse rounded-full bg-slate-200 w-full  py-2'></p>
+                                 <p className='text-purple-600 font-medium p-1 animate-pulse rounded-full bg-slate-200 w-full  py-2'></p>
                                  <p className='text-slate-500 line-through p-1 animate-pulse rounded-full bg-slate-200 w-full  py-2'></p>
                              </div>
                              <button className='text-sm  text-white px-3  rounded-full bg-slate-200  py-2 animate-pulse'></button>
@@ -47,10 +47,10 @@ const VerticalCard = ({loading,data = []}) => {
                              <h2 className='font-medium text-base md:text-lg text-ellipsis line-clamp-1 text-black'>{product?.productName}</h2>
                              <p className='capitalize text-slate-500'>{product?.category}</p>
                              <div className='flex gap-3'>
-                                 <p className='text-cyan-600 font-medium'>{ displayINRCurrency(product?.sellingPrice) }</p>
+                                 <p className='text-purple-600 font-medium'>{ displayINRCurrency(product?.sellingPrice) }</p>
                                  <p className='text-slate-500 line-through'>{ displayINRCurrency(product?.price)  }</p>
                              </div>
-                             <button className='text-sm bg-cyan-600 hover:bg-cyan-700 text-white px-3 py-0.5 rounded-full' onClick={(e)=>handleAddToCart(e,product?._id)}>Add to Cart</button>
+                             <button className='text-sm bg-purple-600 hover:bg-purple-700 text-white px-3 py-0.5 rounded-full' onClick={(e)=>handleAddToCart(e,product?._id)}>Add to Cart</button>
                          </div>
                      </Link>
                  )
